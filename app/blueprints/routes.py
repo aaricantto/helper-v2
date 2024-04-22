@@ -19,3 +19,13 @@ def folder_contents(folder_path):
         return jsonify(contents)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+
+
+
+
+
+
+    ############# FOR TOMORROW
+    # - create a list of exclusionary files - a list of files to disclude from @staticmethod - get_folder_contents(folder_path):
+    # - create a copy paste button for prompting the GPT

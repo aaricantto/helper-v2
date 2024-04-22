@@ -14,13 +14,30 @@ class Node {
   let selectedFiles = new Set();
 
 
-  
-  function initializeGraph() {
+let nodeStrokeColor = '#ffffff';
+let linkStrokeColor = '#999999';
+let selectedNodeColor = '#000000';
+
+
+function updateColorVariables(theme) {
+    if (theme === 'dark') {
+        nodeStrokeColor = '#1a1a1a';
+        linkStrokeColor = '#e5e5e5';
+        selectedNodeColor = '#ffffff';
+    } else {
+        nodeStrokeColor = '#ffffff';
+        linkStrokeColor = '#999999';
+        selectedNodeColor = '#000000';
+    }
+}
+
+
+function initializeGraph() {
     svg = d3.select('#graph')
         .append('svg')
         .attr('viewBox', '0 0 1200 900')
         .style('font', '12px sans-serif');
-  
+
     simulation = d3.forceSimulation(nodesData)
         .force('link', d3.forceLink(linksData).id(d => d.id).distance(50).strength(1))
         .force('charge', d3.forceManyBody().strength(-1000)) 
@@ -31,9 +48,9 @@ class Node {
     
 
     loadBaseNode();
-  }
-  
-  function loadBaseNode() {
+}
+
+function loadBaseNode() {
     fetch('/api/base')
         .then(response => response.json())
         .then(baseFolderPath => {
@@ -43,7 +60,7 @@ class Node {
             updateGraph();
         })
         .catch(error => console.error('Error fetching base folder:', error));
-  }
+}
   
 function updateGraph() {
     // Append links first so that nodes appear on top of them
@@ -82,7 +99,8 @@ function updateGraph() {
                            .style('-ms-user-select', 'none')
                            .style('pointer-events', 'none')  // Prevent text from capturing mouse events
                            .style('paint-order', 'stroke')  // Ensure the stroke is drawn behind the fill
-                           .style('stroke', '#FFF')  // White stroke
+                           .style('stroke', nodeStrokeColor)
+                           .style('fill', selectedNodeColor)
                            .style('stroke-width', '1px')  // Stroke width to create the outline effect
                            .style('stroke-linecap', 'butt')
                            .style('stroke-linejoin', 'miter')
@@ -150,7 +168,7 @@ function updateNodeColors() {
             // Default color for files
             return 'red';
         })
-        .style('stroke', d => d.selected ? '#000' : '#fff')
+        .style('stroke', d => d.selected ? selectedNodeColor : nodeStrokeColor)
         .style('stroke-width', d => d.selected ? 2 : 1);
 }
 
@@ -159,9 +177,9 @@ function updateLinkColors() {
     svg.selectAll('line.link')
         .style('stroke', d => {
             if (d.target.selected) {
-                return '#000'; // The link turns black if either the source or target node is selected.
+                return selectedNodeColor; // The link turns black if either the source or target node is selected.
             } else {
-                return '#999'; // Default link color when no nodes are selected.
+                return linkStrokeColor; // Default link color when no nodes are selected.
             }
         })
         .style('stroke-width', d => {
@@ -282,6 +300,8 @@ function ticked() {
         .attr('visibility', 'visible')
         // Shift the text-anchor and alignment-baseline based on the node's position
         .style('font', d => (d.selected) ? 'bold 14px sans-serif' : '12px sans-serif')
+        .style('stroke', nodeStrokeColor)
+        .style('fill', selectedNodeColor)
         .raise();
 
     svg.selectAll('line.link')

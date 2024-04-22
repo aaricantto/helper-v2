@@ -5,11 +5,26 @@
     <title>Your App</title>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='variables.css') }}">
     <script src="https://d3js.org/d3.v6.min.js" defer></script>
-    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='nodes.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='utility.js') }}" defer></script>
 </head>
 <body>
     <!-- Placeholder for the graph -->
     <div id="graph"></div>
+
+    <div id="utility-section">
+        <div id="col-container">
+            <button id="toggle-theme-btn">Dark/Light</button>
+        </div>
+        <div id="col-container">
+            <button id="exclude-files-btn">Exclude Files</button>
+        </div>
+        <div id="col-container">
+            <button id="copy-to-clipboard-btn">Copy</button>
+        </div>
+    </div>
+
 </body>
 </html>
