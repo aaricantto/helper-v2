@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Your App</title>
+
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://d3js.org/d3.v6.min.js" defer></script>
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
 </head>
 <body>
-    <h1>Hello from Flask!</h1>
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <!-- Placeholder for the graph -->
+    <div id="graph"></div>
 </body>
 </html>
