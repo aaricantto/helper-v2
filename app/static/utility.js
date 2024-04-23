@@ -1,21 +1,23 @@
 document.addEventListener('DOMContentLoaded', (event) => {
     const toggleThemeBtn = document.getElementById('toggle-theme-btn');
+    
+    // Set the initial theme to 'dark' on load
+    dark_light('dark');
 
     // Listener for the Dark/Light toggle button
-    toggleThemeBtn.addEventListener('click', () => {
-        const theme = document.documentElement.getAttribute('data-theme');
-        const newTheme = theme === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', newTheme);
-
-        // Update global color variables
-        updateColorVariables(newTheme);
-
-        // Update the graph with new colors
-        updateGraph();
-    });
+    toggleThemeBtn.addEventListener('click', () => dark_light());
+    
     const copyBtn = document.getElementById('copy-to-clipboard-btn');
     copyBtn.addEventListener('click', copyContentToClipboard);
 });
+
+function dark_light(forcedTheme) {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = forcedTheme || (currentTheme === 'dark' ? 'light' : 'dark');
+    document.documentElement.setAttribute('data-theme', newTheme);
+    updateColorVariables(newTheme);
+    updateGraph();
+}
 
 function copyContentToClipboard() {
     const selectedFilePaths = Array.from(selectedFiles);
@@ -29,7 +31,6 @@ function copyContentToClipboard() {
     })
     .then(response => response.json())
     .then(data => {
-        // Use the combinedContent from the response
         navigator.clipboard.writeText(data.combinedContent).then(() => {
             console.log('Content copied to clipboard');
         }).catch(err => {

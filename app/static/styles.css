@@ -59,7 +59,7 @@ button {
     cursor: pointer;
     outline: none;
     color: var(--white-text-1);
-    background-color: var(--button-bg);
+    background-color: var(--button-bg-light);
     border: 1px solid var(--border-light);
     border-radius: 5px;
     box-shadow: 0 2px 4px var(--shadow);
@@ -90,7 +90,7 @@ button:active {
 
     button {
         color: var(--dark-text-1); 
-        background-color: var(--button-bg);
+        background-color: var(--button-bg-dark);
         border: 1px solid var(--border-dark);
         box-shadow: 0 4px 8px var(--shadow);
     }
