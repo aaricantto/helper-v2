@@ -1,5 +1,3 @@
-# SCRIPT 1: app/models/structure.py
-
 import os
 
 class FileStructure:
